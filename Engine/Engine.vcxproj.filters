@@ -9,9 +9,20 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="Math">
+      <UniqueIdentifier>{1c199b9a-a862-439d-94ab-7a419ff4b086}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics">
+      <UniqueIdentifier>{b3a5d87f-a730-4aa5-9509-0ccb5750aea6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{73eae3e6-3b4d-47d1-a1b8-a9e406765c51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{97c2317a-2b4b-4337-a3d5-4f0441890f77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input">
+      <UniqueIdentifier>{4fd0feee-046a-40f0-abc2-132472d2fe54}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -21,10 +32,76 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Math\Color.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\MathStuff.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Matrix2x2.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Matrix3x3.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Random.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Transform.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Vector2.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Texture.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\System.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\Resource.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\ResourceManager.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Renderer.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\InputSystem.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Timer.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Color.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Transform.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Vector2.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Texture.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Resources\ResourceManager.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Renderer.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Input\InputSystem.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Timer.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
