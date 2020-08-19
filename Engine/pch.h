@@ -12,12 +12,22 @@
 #include <SDL.h>
 #include <SDL_image.h>
 
+#include "Core/Assert.h"
+
+#include "Math/MathStuff.h"
+#include "Math/Random.h"
+#include "Math/Transform.h"
+#include "Math/Color.h"
+
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <vector>
+#include <array>
 #include <list>
 #include <map>
 #include <chrono>
+#include <cassert>
+#include <functional>
 
 #endif //PCH_H

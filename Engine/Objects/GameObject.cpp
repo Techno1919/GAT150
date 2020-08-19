@@ -7,6 +7,8 @@ namespace nc
 {
 	bool GameObject::Create(void* data)
 	{
+		m_engine = static_cast<Engine*>(data);
+
 		return false;
 	}
 
@@ -14,6 +16,47 @@ namespace nc
 	{
 		RemoveAllComponents();
 	}
+
+	void GameObject::Read(const rapidjson::Value& value)
+	{
+		//json::Get(value, "name", m_name);
+
+		json::Get(value, "position", m_transform.position);
+		json::Get(value, "scale", m_transform.scale);
+		json::Get(value, "angle", m_transform.angle);
+
+		const rapidjson::Value& componentsValue = value["Components"];
+		if (componentsValue.IsArray())
+		{
+			ReadComponents(componentsValue);
+		}
+
+	}
+
+	void GameObject::ReadComponents(const rapidjson::Value& value)
+	{
+		for (rapidjson::SizeType i = 0; i < value.Size(); i++)
+		{
+			const rapidjson::Value& componentValue = value[i];
+			if (componentValue.IsObject())
+			{
+				std::string typeName;
+				// read component “type” name from json (Get)
+
+				Component* component = ;// create component from object factory
+					if (component)
+					{
+						// call component create, pass in gameobject (this)
+						component->Create(this);
+						// call component read
+						component->Read();
+						// add component to game object
+						this->AddComponent(component);
+					}
+			}
+		}
+	}
+
 
 	void GameObject::Update()
 	{
@@ -34,7 +77,6 @@ namespace nc
 
 	void GameObject::AddComponent(Component* component)
 	{
-		component->m_owner = this;
 		m_components.push_back(component);
 	}
 

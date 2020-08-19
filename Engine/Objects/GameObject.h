@@ -1,6 +1,7 @@
 #pragma once
 #include "Object.h"
 #include "Math/Transform.h"
+#include "Engine.h"
 #include <vector>
 
 namespace nc
@@ -12,6 +13,9 @@ namespace nc
 	public:
 		virtual bool Create(void* data = nullptr) override;
 		virtual void Destroy() override;
+
+		void Read(const rapidjson::Value& value) override;
+		void ReadComponents(const rapidjson::Value& value);
 
 		void Update();
 		void Draw();
@@ -34,9 +38,10 @@ namespace nc
 
 		friend class Component;
 		friend class PhysicsComponent;
-
-	protected:
+	public:
 		nc::Transform m_transform;
+		Engine* m_engine;
+	protected:
 		std::vector<Component*> m_components;
 	};
 }

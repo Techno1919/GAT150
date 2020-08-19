@@ -3,6 +3,13 @@
 
 namespace nc
 {
+	std::ostream& operator<<(std::ostream& stream, Color& c)
+	{
+		stream << c.r << " " << c.g << " " << c.b << " " << c.a;
+
+		return stream;
+
+	}
 	std::istream& operator>>(std::istream& stream, Color& c)
 	{
 		std::string line;

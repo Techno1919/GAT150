@@ -42,6 +42,7 @@ namespace nc
 		Color& operator *= (float s) { { r += s; b += s; g += s; } return *this; };
 		Color& operator /= (float s) { { r += s; b += s; g += s; } return *this; };
 
+		friend std::ostream& operator<<(std::ostream& stream, Color& c);
 		friend std::istream& operator >> (std::istream& stream, Color& c);
 
 		SDL_Color Pack888() const;

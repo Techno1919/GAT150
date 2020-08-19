@@ -9,6 +9,14 @@ namespace nc
 	const Vector2 Vector2::up = { 0, -1 };
 	const Vector2 Vector2::down = { 0, 1 };
 	const Vector2 Vector2::forward = { 0, -1 };
+
+	std::ostream& operator<<(std::ostream& stream, Vector2& v)
+	{
+		stream << v.x << " " << v.y;
+
+		return stream;
+
+	}
 	std::istream& operator>>(std::istream& stream, Vector2& v)
 	{
 		std::string line;
