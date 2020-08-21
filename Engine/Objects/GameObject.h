@@ -39,6 +39,7 @@ namespace nc
 		friend class Component;
 		friend class PhysicsComponent;
 	public:
+		std::string m_name;
 		nc::Transform m_transform;
 		Engine* m_engine;
 	protected:

@@ -17,6 +17,7 @@ namespace nc
 
 	protected:
 		std::string m_textureName;
+		Vector2 m_origin{ 0.5f, 0.5f };
 		SDL_Rect m_rect{ 0, 0, 0, 0 };
 	};
 }

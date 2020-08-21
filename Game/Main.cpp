@@ -5,41 +5,27 @@
 #include "Core/Json.h"
 #include "Components/PlayerComponent.h"
 #include "Objects/ObjectFactory.h"
+#include "Objects/Scene.h"
 
 nc::Engine engine;
+nc::Scene scene;
 //nc::ObjectFactory objectFactory;
 
 int main(int, char**)
 {
-	rapidjson::Document document;
+	scene.Create(&engine);
 
 	engine.Startup();
 
 	nc::ObjectFactory::Instance().Initialize();
 	nc::ObjectFactory::Instance().Register("PlayerComponent", nc::Object::Instantiate<nc::PlayerComponent>);
 
-	nc::GameObject* player = nc::ObjectFactory::Instance().Create<nc::GameObject>("GameObject");
-
-	player->Create(&engine);
-	nc::json::Load("player.txt", document);
-	player->Read(document);
-
-	nc::Component* component = nc::ObjectFactory::Instance().Create<nc::Component>("PhysicsComponent");
-	component->Create(player);
-	player->AddComponent(component);
-
-	component = nc::ObjectFactory::Instance().Create<nc::Component>("SpriteComponent");
-	component->Create(player);
-	nc::json::Load("sprite.txt", document);
-	component->Read(document);
-	player->AddComponent(component);
-
-	component = nc::ObjectFactory::Instance().Create<nc::Component>("PlayerComponent");
-	component->Create(player);
-	player->AddComponent(component);
+	rapidjson::Document document;
+	nc::json::Load("Scene.txt", document);
+	scene.Read(document);
 
 	// texture
-	nc::Texture* background = engine.GetSystem<nc::ResourceManager>()->Get<nc::Texture>("background.png", engine.GetSystem<nc::Renderer>());
+	//nc::Texture* background = engine.GetSystem<nc::ResourceManager>()->Get<nc::Texture>("background.png", engine.GetSystem<nc::Renderer>());
 
 
 	SDL_Event event;
@@ -56,13 +42,13 @@ int main(int, char**)
 
 		//update
 		engine.Update();
-		player->Update();
+		scene.Update();
 
 		engine.GetSystem<nc::Renderer>()->BeginFrame();
 
 		//draw
-		background->Draw({ 0, 0 }, { 1, 1 }, 0);
-		player->Draw();
+		//background->Draw({ 0, 0 }, { 1, 1 }, 0);
+		scene.Draw();
 
 		if (engine.GetSystem<nc::InputSystem>()->GetButtonState(SDL_SCANCODE_ESCAPE) == nc::InputSystem::eButtonState::PRESSED)
 		{
@@ -76,6 +62,7 @@ int main(int, char**)
 	std::getchar();
 
 	engine.Shutdown();
+	scene.Destroy();
 
 	return 0;
 }

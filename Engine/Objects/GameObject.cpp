@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "Components/Component.h"
 #include "Components/RenderComponent.h"
+#include "ObjectFactory.h"
 
 namespace nc
 {
@@ -19,7 +20,7 @@ namespace nc
 
 	void GameObject::Read(const rapidjson::Value& value)
 	{
-		//json::Get(value, "name", m_name);
+		json::Get(value, "name", m_name);
 
 		json::Get(value, "position", m_transform.position);
 		json::Get(value, "scale", m_transform.scale);
@@ -42,16 +43,16 @@ namespace nc
 			{
 				std::string typeName;
 				// read component “type” name from json (Get)
-
-				Component* component = ;// create component from object factory
+				json::Get(componentValue, "type", typeName);
+				Component* component = ObjectFactory::Instance().Create<Component>(typeName);// create component from object factory
 					if (component)
 					{
 						// call component create, pass in gameobject (this)
 						component->Create(this);
 						// call component read
-						component->Read();
+						component->Read(componentValue);
 						// add component to game object
-						this->AddComponent(component);
+						AddComponent(component);
 					}
 			}
 		}
