@@ -9,24 +9,28 @@
 
 nc::Engine engine;
 nc::Scene scene;
-//nc::ObjectFactory objectFactory;
 
 int main(int, char**)
 {
-	scene.Create(&engine);
 
 	engine.Startup();
 
 	nc::ObjectFactory::Instance().Initialize();
-	nc::ObjectFactory::Instance().Register("PlayerComponent", nc::Object::Instantiate<nc::PlayerComponent>);
+	nc::ObjectFactory::Instance().Register("PlayerComponent", new nc::Creator<nc::PlayerComponent, nc::Object>);
 
 	rapidjson::Document document;
 	nc::json::Load("Scene.txt", document);
+
+	scene.Create(&engine);
 	scene.Read(document);
 
-	// texture
-	//nc::Texture* background = engine.GetSystem<nc::ResourceManager>()->Get<nc::Texture>("background.png", engine.GetSystem<nc::Renderer>());
-
+	/*for (size_t i = 0; i < 10; i++)
+	{
+		nc::GameObject* gameObject = nc::ObjectFactory::Instance().Create<nc::GameObject>("ProtoExplosion");
+		gameObject->m_transform.position = { nc::random(0, 800), nc::random(0, 600) };
+		gameObject->m_transform.angle = nc::random(0, 360);
+		scene.AddGameObject(gameObject);
+	}*/
 
 	SDL_Event event;
 	bool quit = false;

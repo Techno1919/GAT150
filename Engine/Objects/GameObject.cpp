@@ -6,6 +6,25 @@
 
 namespace nc
 {
+	GameObject::GameObject(const GameObject& other)
+	{
+		m_name = other.m_name;
+		m_tag = other.m_tag;
+		m_lifetime = other.m_lifetime;
+
+		m_flags = other.m_flags;
+
+		m_transform = other.m_transform;
+		m_engine = other.m_engine;
+		
+		for (Component* component : other.m_components)
+		{
+			Component* clone = dynamic_cast<Component*>(component->Clone());
+			clone->m_owner = this;
+			AddComponent(clone);
+		}
+	}
+
 	bool GameObject::Create(void* data)
 	{
 		m_engine = static_cast<Engine*>(data);
@@ -21,15 +40,24 @@ namespace nc
 	void GameObject::Read(const rapidjson::Value& value)
 	{
 		json::Get(value, "name", m_name);
+		json::Get(value, "tag", m_tag);
+		json::Get(value, "lifetime", m_lifetime);
+
+		bool transient = m_flags[eFlags::TRANSIENT];
+		json::Get(value, "transient", transient);
+		m_flags[eFlags::TRANSIENT] = transient;
 
 		json::Get(value, "position", m_transform.position);
 		json::Get(value, "scale", m_transform.scale);
 		json::Get(value, "angle", m_transform.angle);
 
-		const rapidjson::Value& componentsValue = value["Components"];
-		if (componentsValue.IsArray())
+		if (value.HasMember("Components"))
 		{
-			ReadComponents(componentsValue);
+			const rapidjson::Value& componentsValue = value["Components"];
+			if (componentsValue.IsArray())
+			{
+				ReadComponents(componentsValue);
+			}
 		}
 
 	}
@@ -42,16 +70,12 @@ namespace nc
 			if (componentValue.IsObject())
 			{
 				std::string typeName;
-				// read component “type” name from json (Get)
 				json::Get(componentValue, "type", typeName);
 				Component* component = ObjectFactory::Instance().Create<Component>(typeName);// create component from object factory
 					if (component)
 					{
-						// call component create, pass in gameobject (this)
 						component->Create(this);
-						// call component read
 						component->Read(componentValue);
-						// add component to game object
 						AddComponent(component);
 					}
 			}
@@ -64,6 +88,12 @@ namespace nc
 		for (auto component : m_components)
 		{
 			component->Update();
+		}
+
+		if (m_flags[eFlags::TRANSIENT])
+		{
+			m_lifetime -= m_engine->GetTimer().DeltaTime();
+			m_flags[eFlags::DESTROY] = (m_lifetime <= 0);
 		}
 	}
 

@@ -27,7 +27,7 @@ namespace nc
 	void SpriteComponent::Draw()
 	{
 		Texture* texture = m_owner->m_engine->GetSystem<nc::ResourceManager>()->Get<nc::Texture>(m_textureName, m_owner->m_engine->GetSystem<nc::Renderer>());
-		texture->Draw(m_rect, m_owner->m_transform.position, m_owner->m_transform.angle, nc::Vector2{ 1, 1 } * m_owner->m_transform.scale);
+		texture->Draw(m_rect, m_owner->m_transform.position, m_owner->m_transform.angle, nc::Vector2{ 1, 1 } * m_owner->m_transform.scale, m_origin);
 	}
 
 }
