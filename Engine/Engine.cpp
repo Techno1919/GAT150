@@ -1,10 +1,13 @@
 #include "pch.h"
 #include "Engine.h"
+#include <time.h>
 
 namespace nc
 {
 	bool Engine::Startup()
 	{
+		srand(static_cast<unsigned int>(time(nullptr)));
+
 		if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
 		{
 			std::cout << "SDL_Init Error: " << SDL_GetError() << std::endl;

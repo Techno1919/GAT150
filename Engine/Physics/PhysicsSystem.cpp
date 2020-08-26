@@ -6,6 +6,9 @@ bool nc::PhysicsSystem::Startup()
     b2Vec2 gravity{ 0, 150 };
     m_world = new b2World{ gravity };
 
+    m_contactListener = new ContanctListener;
+    m_world->SetContactListener(m_contactListener);
+
     return true;
 }
 
@@ -54,6 +57,7 @@ b2Body* nc::PhysicsSystem::CreateBody(const Vector2& position, const RigidBodyDa
     fixtureDef.shape = &shape;
     fixtureDef.density = data.density;
     fixtureDef.friction = data.friction;
+    fixtureDef.restitution = data.restitution;
     fixtureDef.userData = gameObject;
 
     body->CreateFixture(&fixtureDef);
