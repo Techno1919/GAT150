@@ -1,5 +1,6 @@
 #pragma once
 #include "Components/Component.h"
+#include "Components/AudioComponent.h"
 
 namespace nc
 {
@@ -12,5 +13,6 @@ namespace nc
 
 		virtual void Update() override;
 
+		void CollisionEvent(GameObject* gameObject);
 	};
 }

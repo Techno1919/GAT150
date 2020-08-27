@@ -24,11 +24,18 @@ int main(int, char**)
 	scene.Create(&engine);
 	scene.Read(document);
 
-	for (size_t i = 0; i < 10; i++)
+	/*for (size_t i = 0; i < 10; i++)
 	{
 		nc::GameObject* gameobject = nc::ObjectFactory::Instance().Create<nc::GameObject>("ProtoBox");
-		gameobject->m_transform.position = { nc::random(0, 800), nc::random(0, 200) };
+		gameobject->m_transform.position = { nc::random(0, 800), nc::random(0, 400) };
 		gameobject->m_transform.angle = nc::random(0, 360);
+		scene.AddGameObject(gameobject);
+	}*/
+
+	for (size_t i = 0; i < 10; i++)
+	{
+		nc::GameObject* gameobject = nc::ObjectFactory::Instance().Create<nc::GameObject>("ProtoCoin");
+		gameobject->m_transform.position = { nc::random(0, 800), nc::random(200, 400) };
 		scene.AddGameObject(gameobject);
 	}
 
