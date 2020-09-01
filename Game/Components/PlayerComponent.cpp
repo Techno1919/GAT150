@@ -86,7 +86,7 @@ namespace nc
 			m_coins++;
 			if (m_coins >= 9)
 			{
-				m_owner->m_scene->SetGameState(gameState::GameWin);
+				m_owner->m_scene->SetGameState(gameState::PlayerWin);
 			}
 			gameObject->m_flags[GameObject::eFlags::DESTROY] = true;
 			audioComponent->SetSoundName("coin.wav");

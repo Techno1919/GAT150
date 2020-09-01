@@ -74,7 +74,7 @@ int main(int, char**)
 		{
 			quit = true;
 		}
-		if (scene.GetGameState() == nc::gameState::GameWin || scene.GetGameState() == nc::gameState::PlayerDead)
+		if (scene.GetGameState() == nc::gameState::PlayerWin || scene.GetGameState() == nc::gameState::PlayerDead)
 		{
 			quit = true;
 		}

@@ -11,7 +11,7 @@ namespace nc
 	{
 		PlayingGame,
 		PlayerDead,
-		GameWin
+		PlayerWin
 	};
 
 	class Scene : public Object
