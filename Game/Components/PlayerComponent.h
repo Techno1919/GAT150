@@ -1,6 +1,7 @@
 #pragma once
 #include "Components/Component.h"
 #include "Components/AudioComponent.h"
+#include <vector>
 
 namespace nc
 {
@@ -13,6 +14,10 @@ namespace nc
 
 		virtual void Update() override;
 
-		void CollisionEvent(GameObject* gameObject);
+		void OnCollisionEnter(const Event& event);
+		void OnCollisionExit(const Event& event);
+
+	public:
+		int m_coins;
 	};
 }

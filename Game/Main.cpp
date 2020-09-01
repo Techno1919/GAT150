@@ -74,6 +74,10 @@ int main(int, char**)
 		{
 			quit = true;
 		}
+		if (scene.GetGameState() == nc::gameState::GameWin || scene.GetGameState() == nc::gameState::PlayerDead)
+		{
+			quit = true;
+		}
 
 		engine.GetSystem<nc::Renderer>()->EndFrame();
 	}

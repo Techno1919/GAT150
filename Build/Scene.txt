@@ -92,7 +92,6 @@
         },
         {
           "type": "EnemyComponent"
-
         },
         {
           "type": "RigidBodyComponent",
@@ -106,7 +105,7 @@
           "density": 1,
           "friction": 1,
           "restitution": 0.7,
-          "gravityScale": 0.0
+          "gravityScale": 0
         }
       ]
     },
@@ -186,6 +185,45 @@
           "friction": 1
         }
       ]
+    },
+    {
+      "type": "GameObject",
+      "name": "ProtoTile02",
+      "tag": "Floor",
+      "position": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "angle": 0,
+      "Components": [
+        {
+          "type": "SpriteComponent",
+          "texture": "textures/tile02.png",
+          "origin": [
+            0.5,
+            0.5
+          ],
+          "rect": [
+            0,
+            0,
+            64,
+            64
+          ]
+        },
+        {
+          "type": "RigidBodyComponent",
+          "isDynamic": false,
+          "lockAngle": false,
+          "size": [
+            32,
+            32
+          ],
+          "density": 1,
+          "friction": 1,
+          "restitution": 2
+        }
+      ]
     }
   ],
   "GameObjects": [
@@ -246,6 +284,40 @@
           "density": 1,
           "friction": 1,
           "restitution": 0.1
+        }
+      ]
+    },
+    {
+      "type": "GameObject",
+      "name": "Tile02",
+      "tag": "Floor",
+      "position": [
+        500,
+        200
+      ],
+      "scale": 1,
+      "angle": 0,
+      "Components": [
+        {
+          "type": "SpriteComponent",
+          "texture": "Textures/tile02png",
+          "origin": [
+            0.5,
+            0.5
+          ]
+        },
+        {
+          "type": "RigidBodyComponent",
+          "isDynamic": false,
+          "isSensor": true,
+          "lockAngle": true,
+          "size": [
+            32,
+            32
+          ],
+          "density": 1,
+          "friction": 1,
+          "restitution": 3
         }
       ]
     },

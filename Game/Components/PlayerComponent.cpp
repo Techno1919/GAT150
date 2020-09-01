@@ -1,15 +1,20 @@
 #include "pch.h"
 #include "PlayerComponent.h"
 #include "Components/PhysicsComponent.h"
-#include "Components//SpriteComponent.h"
+#include "Components/SpriteComponent.h"
 #include "Components/RigidBodyComponent.h"
-
+#include "Core/EventManager.h"
+#include "Objects/Scene.h"
 
 namespace nc
 {
 	bool PlayerComponent::Create(void* data)
 	{
 		m_owner = static_cast<GameObject*>(data);
+
+		EventManager::Instance().Subscribe("CollisionEnter", std::bind(&PlayerComponent::OnCollisionEnter, this, std::placeholders::_1), m_owner);
+		EventManager::Instance().Subscribe("CollisionExit", std::bind(&PlayerComponent::OnCollisionExit, this, std::placeholders::_1), m_owner);
+
 		return true;
 	}
 
@@ -36,6 +41,9 @@ namespace nc
 		{
 			force.y = -1500;
 
+			AudioComponent* audioComponent = m_owner->GetComponent<AudioComponent>();
+			audioComponent->SetSoundName("jump.wav");
+			audioComponent->Play();
 		}
 
 		// apply force
@@ -52,29 +60,48 @@ namespace nc
 
 
 		}
+	}
 
-		// check for coin contact
-		auto coinContacts = m_owner->GetContactsWithTag("Pickup");
-		for (auto contact : coinContacts)
+	void PlayerComponent::OnCollisionEnter(const Event& event)
+	{
+		GameObject* gameObject = dynamic_cast<GameObject*>(event.sender);
+		AudioComponent* audioComponent = m_owner->GetComponent<AudioComponent>();
+
+		if (gameObject->m_tag == "Enemy")
 		{
-			contact->m_flags[GameObject::eFlags::DESTROY] = true;
-			AudioComponent* audioComponent = m_owner->GetComponent<AudioComponent>();
-			if (audioComponent)
-			{
-				audioComponent->Play();
-			}
+			audioComponent->SetSoundName("grunt.wav");
+			audioComponent->Play();
+
+			m_owner->m_scene->SetGameState(gameState::PlayerDead);
+			m_owner->m_flags[GameObject::eFlags::DESTROY] = true;
+
+			Event event;
+			event.type = "PlayerDead";
+			EventManager::Instance().Notify(event);
+			
 		}
 
-		auto enemyContacts = m_owner->GetContactsWithTag("Enemy");
-		for (auto contact : enemyContacts)
+		if (gameObject->m_tag == "Pickup")
 		{
-			AudioComponent* audioComponent = m_owner->GetComponent<AudioComponent>();
-			if (audioComponent)
+			m_coins++;
+			if (m_coins >= 9)
 			{
-				//audioComponent->SetSoundName("scream.wav");
-				//audioComponent->Play();
+				m_owner->m_scene->SetGameState(gameState::GameWin);
 			}
+			gameObject->m_flags[GameObject::eFlags::DESTROY] = true;
+			audioComponent->SetSoundName("coin.wav");
+			audioComponent->Play();
+			
 		}
+
+		std::cout << "collision enter: " << gameObject->m_name << std::endl;
+	}
+
+	void PlayerComponent::OnCollisionExit(const Event& event)
+	{
+		GameObject* gameObject = dynamic_cast<GameObject*>(event.sender);
+
+		std::cout << "collision exit: " << gameObject->m_name << std::endl;
 	}
 
 }

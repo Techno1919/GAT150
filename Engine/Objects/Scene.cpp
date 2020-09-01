@@ -5,9 +5,12 @@
 
 namespace nc
 {
+
 	bool Scene::Create(void* data)
 	{
 		m_engine = static_cast<Engine*>(data);
+		m_state = gameState::PlayingGame;
+
 		return true;
 	}
 

@@ -7,6 +7,13 @@ namespace nc
 	class Engine;
 	class GameObject;
 
+	enum class gameState
+	{
+		PlayingGame,
+		PlayerDead,
+		GameWin
+	};
+
 	class Scene : public Object
 	{
 	public:
@@ -27,10 +34,15 @@ namespace nc
 		void RemoveGameObject(GameObject* gameObject);
 		void RemoveAllGameObjects();
 
+		gameState GetGameState() { return m_state; }
+		void SetGameState(gameState state) { m_state = state; }
+
 	public:
 		Engine* m_engine{ nullptr };
 
 	protected:
 		std::list<GameObject*> m_gameObjects;
+		gameState m_state;
+		
 	};
 }

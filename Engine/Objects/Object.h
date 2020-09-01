@@ -1,5 +1,6 @@
 #pragma once
 #include "Core/Json.h"
+#include "Core/EventManager.h"
 #include <map>
 
 namespace nc
