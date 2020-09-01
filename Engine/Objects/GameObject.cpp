@@ -3,6 +3,7 @@
 #include "Components/Component.h"
 #include "Components/RenderComponent.h"
 #include "ObjectFactory.h"
+#include "Scene.h"
 
 namespace nc
 {
@@ -16,6 +17,7 @@ namespace nc
 
 		m_transform = other.m_transform;
 		m_engine = other.m_engine;
+		m_scene = other.m_scene;
 		
 		for (Component* component : other.m_components)
 		{
@@ -27,9 +29,10 @@ namespace nc
 
 	bool GameObject::Create(void* data)
 	{
-		m_engine = static_cast<Engine*>(data);
+		m_scene = static_cast<Scene*>(data);
+		m_engine = m_scene->m_engine;
 
-		return false;
+		return true;
 	}
 
 	void GameObject::Destroy()

@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "PlayerComponent.h"
 #include "Components/PhysicsComponent.h"
+#include "Components//SpriteComponent.h"
 #include "Components/RigidBodyComponent.h"
 
 
@@ -34,11 +35,6 @@ namespace nc
 		if (onGround && m_owner->m_engine->GetSystem<nc::InputSystem>()->GetButtonState(SDL_SCANCODE_W) == nc::InputSystem::eButtonState::PRESSED)
 		{
 			force.y = -1500;
-			AudioComponent* audioComponent = m_owner->GetComponent<AudioComponent>();
-			if (audioComponent)
-			{
-				audioComponent->Play();
-			}
 
 		}
 
@@ -47,6 +43,14 @@ namespace nc
 		if (component)
 		{
 			component->ApplyForce(force);
+
+			Vector2 velocity = component->GetVelocity();
+
+			SpriteComponent* spriteComponent = m_owner->GetComponent<SpriteComponent>();
+			if (velocity.x <= -0.5f) spriteComponent->Flip();
+			if (velocity.x >= -0.5f) spriteComponent->Flip(false);
+
+
 		}
 
 		// check for coin contact
@@ -54,12 +58,23 @@ namespace nc
 		for (auto contact : coinContacts)
 		{
 			contact->m_flags[GameObject::eFlags::DESTROY] = true;
+			AudioComponent* audioComponent = m_owner->GetComponent<AudioComponent>();
+			if (audioComponent)
+			{
+				audioComponent->Play();
+			}
 		}
 
-	}
-
-	void PlayerComponent::CollisionEvent(GameObject* gameObject)
-	{
+		auto enemyContacts = m_owner->GetContactsWithTag("Enemy");
+		for (auto contact : enemyContacts)
+		{
+			AudioComponent* audioComponent = m_owner->GetComponent<AudioComponent>();
+			if (audioComponent)
+			{
+				//audioComponent->SetSoundName("scream.wav");
+				//audioComponent->Play();
+			}
+		}
 	}
 
 }

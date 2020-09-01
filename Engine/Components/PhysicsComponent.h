@@ -14,6 +14,7 @@ namespace nc
 		virtual void Update() override;
 
 		virtual void ApplyForce(const nc::Vector2& force) { m_force = force; }
+		virtual Vector2& GetVelocity() { return m_velocity; }
 
 	protected:
 		nc::Vector2 m_velocity;

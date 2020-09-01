@@ -4,8 +4,10 @@
 #include "Objects/GameObject.h"
 #include "Core/Json.h"
 #include "Components/PlayerComponent.h"
+#include "Components/EnemyComponent.h"
 #include "Objects/ObjectFactory.h"
 #include "Objects/Scene.h"
+#include "TileMap.h"
 
 nc::Engine engine;
 nc::Scene scene;
@@ -17,12 +19,19 @@ int main(int, char**)
 
 	nc::ObjectFactory::Instance().Initialize();
 	nc::ObjectFactory::Instance().Register("PlayerComponent", new nc::Creator<nc::PlayerComponent, nc::Object>);
+	nc::ObjectFactory::Instance().Register("EnemyComponent", new nc::Creator<nc::EnemyComponent, nc::Object>);
 
 	rapidjson::Document document;
 	nc::json::Load("Scene.txt", document);
 
 	scene.Create(&engine);
 	scene.Read(document);
+
+	rapidjson::Document document1;
+	nc::TileMap tileMap;
+	nc::json::Load("tileMap.txt", document1);
+	tileMap.Read(document1);
+	tileMap.Create(&scene);
 
 	/*for (size_t i = 0; i < 10; i++)
 	{
@@ -32,12 +41,12 @@ int main(int, char**)
 		scene.AddGameObject(gameobject);
 	}*/
 
-	for (size_t i = 0; i < 10; i++)
+	/*for (size_t i = 0; i < 10; i++)
 	{
 		nc::GameObject* gameobject = nc::ObjectFactory::Instance().Create<nc::GameObject>("ProtoCoin");
-		gameobject->m_transform.position = { nc::random(0, 800), nc::random(200, 400) };
+		gameobject->m_transform.position = { nc::random(0, 800), nc::random(400, 600) };
 		scene.AddGameObject(gameobject);
-	}
+	}*/
 
 	SDL_Event event;
 	bool quit = false;
