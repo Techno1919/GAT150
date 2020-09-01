@@ -81,6 +81,13 @@ namespace nc
 			
 		}
 
+		if (gameObject->m_tag == "FloorJump")
+		{
+			audioComponent->SetSoundName("Jump2.wav");
+			audioComponent->Play();
+
+		}
+
 		if (gameObject->m_tag == "Pickup")
 		{
 			m_coins++;

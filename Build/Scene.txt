@@ -189,7 +189,7 @@
     {
       "type": "GameObject",
       "name": "ProtoTile02",
-      "tag": "Floor",
+      "tag": "FloorJump",
       "position": [
         0,
         0
